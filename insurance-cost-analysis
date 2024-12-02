@@ -1,0 +1,204 @@
+ Issaiah Jennings 
+
+Final Project
+
+
+Introduction
+
+
+My project aimed to determine whether smoking status and region (northeast, southeast, southwest, northwest) significantly impact insurance charges. Specifically, I wanted to see if smokers incur higher charges compared to non-smokers and whether insurance costs differ across regions. Understanding these relationships could help insurance providers identify how lifestyle and geographic factors influence healthcare costs, ultimately guiding pricing strategies and market targeting.
+
+
+Methods
+
+
+This project closely relates to concepts from class, particularly hypothesis testing and statistical analysis. For example, I used a t-test to compare the average insurance charges between smokers and non-smokers, a method we learned to analyze differences between two groups. Similarly, I applied ANOVA (Analysis of Variance) to test for differences in average charges across multiple groups, in this case, the regions. These methods align with the class discussions on testing means across two or more categories. Additionally, I explored correlations and regression analysis, which helped evaluate how variables like age and BMI influence charges, further reinforcing concepts from class.
+
+Results
+
+
+
+To approach the problem, I began by preparing the dataset. It included variables such as age, sex, BMI, children, smoking status, region, and insurance charges. I converted categorical variables like smoker and region into factors to ensure compatibility with statistical methods. For the t-test, I compared the mean insurance charges for smokers and non-smokers to evaluate if smoking status significantly impacts costs. 
+
+
+My hypotheses were: the null hypothesis (H₀) stating no difference in charges and the alternative hypothesis (H₁) suggesting that smokers have higher charges. I found a significant difference, with smokers incurring much higher charges. For the ANOVA, I tested if charges differed across regions, with hypotheses assuming no differences (H₀) versus significant differences (H₁). This test revealed that geographic region does significantly influence insurance charges.
+
+
+To visualize these relationships, I created boxplots. The first boxplot showed the distribution of charges for smokers and non-smokers, highlighting the stark cost difference. The second boxplot compared charges across regions, demonstrating variations in pricing based on geographic location. These visualizations made it easier to see how the data supported the statistical findings.
+
+
+
+> # Set the working directory to the Desktop
+
+> setwd("~/Desktop")
+
+> 
+
+> # Load the dataset
+
+> data <- read.csv("insurance.csv")
+
+> 
+
+> # View the first few rows of the dataset
+
+> head(data)
+
+  age    sex    bmi children smoker    region   charges
+
+1  19 female 27.900        0    yes southwest 16884.924
+
+2  18   male 33.770        1     no southeast  1725.552
+
+3  28   male 33.000        3     no southeast  4449.462
+
+4  33   male 22.705        0     no northwest 21984.471
+
+5  32   male 28.880        0     no northwest  3866.855
+
+6  31 female 25.740        0     no southeast  3756.622
+
+> 
+
+> # Convert categorical variables to factors
+
+> data$sex <- as.factor(data$sex)
+
+> data$smoker <- as.factor(data$smoker)
+
+> data$region <- as.factor(data$region)
+
+> 
+
+> # Check for missing values
+
+> sum(is.na(data))
+
+[1] 0
+
+> 
+
+> # Descriptive statistics
+
+> summary(data)
+
+      age            sex           bmi           children     smoker           region       charges     
+
+ Min.   :18.00   female:662   Min.   :15.96   Min.   :0.000   no :1064   northeast:324   Min.   : 1122  
+
+ 1st Qu.:27.00   male  :676   1st Qu.:26.30   1st Qu.:0.000   yes: 274   northwest:325   1st Qu.: 4740  
+
+ Median :39.00                Median :30.40   Median :1.000              southeast:364   Median : 9382  
+
+ Mean   :39.21                Mean   :30.66   Mean   :1.095              southwest:325   Mean   :13270  
+
+ 3rd Qu.:51.00                3rd Qu.:34.69   3rd Qu.:2.000                              3rd Qu.:16640  
+
+ Max.   :64.00                Max.   :53.13   Max.   :5.000                              Max.   :63770  
+
+> 
+
+> # Mean charges by smoker status
+
+> aggregate(charges ~ smoker, data = data, FUN = mean)
+
+  smoker   charges
+
+1     no  8434.268
+
+2    yes 32050.232
+
+> 
+
+> # Perform a t-test to compare charges between smokers and non-smokers
+
+> t_test_result <- t.test(charges ~ smoker, data = data)
+
+> 
+
+> # View the t-test result
+
+> t_test_result
+
+
+	Welch Two Sample t-test
+
+
+data:  charges by smoker
+
+t = -32.752, df = 311.85, p-value < 2.2e-16
+
+alternative hypothesis: true difference in means between group no and group yes is not equal to 0
+
+95 percent confidence interval:
+
+ -25034.71 -22197.21
+
+sample estimates:
+
+ mean in group no mean in group yes 
+
+         8434.268         32050.232 
+
+
+> 
+
+> # Boxplot visualization
+
+> library(ggplot2)
+
+> 
+
+> # Boxplot visualization for smoker vs. charges with comma formatting on y-axis
+
+> ggplot(data, aes(x = smoker, y = charges, fill = smoker)) + 
+
++   geom_boxplot() + 
+
++   labs(title = "Medical Charges by Smoking Status", 
+
++        x = "Smoking Status", 
+
++        y = "Medical Charges") + 
+
++   theme_minimal() + 
+
++   scale_y_continuous(labels = scales::comma)
+
+> 
+
+
+
+
+
+
+
+
+
+# Boxplot for region vs. charges with comma formatting on y-axis
+
+ggplot(data, aes(x = region, y = charges)) + 
+
+  geom_boxplot() + 
+
+  labs(title = "Insurance Charges by Region", 
+
+       x = "Region", 
+
+       y = "Insurance Charges") + 
+
+  theme_minimal() + 
+
+  scale_y_continuous(labels = scales::comma)
+
+
+
+
+
+
+
+
+In conclusion, this study showed that smoking status and region are significant factors influencing insurance charges. Smokers consistently incurred higher costs, and regional differences were also evident. These insights emphasize the importance of considering both lifestyle and geographic variables when setting insurance premiums, as they play a crucial role in determining healthcare costs.
+
+
+
