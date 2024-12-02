@@ -1,0 +1,196 @@
+ Issaiah Jennings 
+
+Module # 12 assignment
+
+
+
+> # Install and load the 'forecast' package
+
+> if (!require(forecast)) {  # Check if 'forecast' package is installed
+
++   install.packages("forecast")  # Install the package if not present
+
++ }
+
+> library(forecast)  # Load the package
+
+> 
+
+> # Define the data for 2012 and 2013
+
+> data_2012 <- c(31.9, 27, 31.3, 31, 39.4, 40.7, 42.3, 49.5, 45, 50, 50.9, 58.5) # Credit card charges for 2012
+
+> data_2013 <- c(39.4, 36.2, 40.5, 44.6, 46.8, 44.7, 52.2, 54, 48.8, 55.8, 58.7, 63.4) # Credit card charges for 2013
+
+> 
+
+> # Combine the data into a single vector
+
+> student_cc <- c(data_2012, data_2013)
+
+> 
+
+> # Create a time series object
+
+> cc_series <- ts(student_cc, frequency = 12, start = c(2012, 1)) 
+
+> # frequency = 12 (monthly), start = c(2012, 1) indicates the time series starts in January 2012
+
+> 
+
+> # Plot the time series
+
+> plot.ts(cc_series, 
+
++         main = "Credit Card Charges (2012-2013)", 
+
++         ylab = "Charges", 
+
++         xlab = "Time", 
+
++         col = "blue")
+
+> 
+
+
+
+
+
+
+
+
+
+
+> # Apply Holt-Winters exponential smoothing to the time series
+
+> hw_model <- HoltWinters(cc_series)
+
+> 
+
+> # Display the Holt-Winters model details
+
+> print(hw_model)
+
+Holt-Winters exponential smoothing with trend and additive seasonal component.
+
+
+Call:
+
+HoltWinters(x = cc_series)
+
+
+Smoothing parameters:
+
+ alpha: 0.4786973
+
+ beta : 0
+
+ gamma: 0.1
+
+
+Coefficients:
+
+           [,1]
+
+a    51.4481469
+
+b     0.6088578
+
+s1   -6.6831338
+
+s2  -10.5867440
+
+s3   -6.6998393
+
+s4   -3.0320795
+
+s5   -1.4068647
+
+s6   -4.0422184
+
+s7    0.4727766
+
+s8    6.6378768
+
+s9    1.4431586
+
+s10   5.6809745
+
+s11   5.7999737
+
+s12  12.6976853
+
+> 
+
+> # Plot the Holt-Winters model results
+
+> plot(hw_model, 
+
++      main = "Exponential Smoothing Model", 
+
++      col = "blue")
+
+
+
+
+
+
+> 
+
+> # Generate a forecast for the next 12 months
+
+> forecast_hw <- forecast(hw_model, h = 12)
+
+> 
+
+> # Plot the forecast
+
+> plot(forecast_hw, 
+
++      main = "Holt-Winters Forecast (Next 12 Months)", 
+
++      col = "blue")
+
+> 
+
+> # Print the forecast values
+
+> print(forecast_hw)
+
+         Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+
+Jan 2014       45.37387 42.36940 48.37834 40.77893 49.96881
+
+Feb 2014       42.07912 38.74815 45.41009 36.98484 47.17340
+
+Mar 2014       46.57488 42.94668 50.20309 41.02602 52.12374
+
+Apr 2014       50.85150 46.94863 54.75437 44.88258 56.82042
+
+May 2014       53.08557 48.92614 57.24501 46.72427 59.44688
+
+Jun 2014       51.05908 46.65801 55.46014 44.32822 57.78993
+
+Jul 2014       56.18293 51.55282 60.81304 49.10179 63.26407
+
+Aug 2014       62.95689 58.10854 67.80523 55.54199 70.37179
+
+Sep 2014       58.37103 53.31386 63.42819 50.63676 66.10530
+
+Oct 2014       63.21770 57.96000 68.47540 55.17674 71.25866
+
+Nov 2014       63.94556 58.49469 69.39642 55.60917 72.28194
+
+Dec 2014       71.45213 65.81471 77.08954 62.83044 80.07381
+
+
+> 
+
+
+
+The time series data shows monthly credit card charges for a student in 2012 and 2013. There are noticeable increases in charges towards the end of each year. The Holt-Winters Exponential Smoothing Model was used to predict future charges, considering both trends and seasonality. The model used a smoothing parameter (alpha) of 0.4787, giving moderate weight to recent data, while the trend component was set to zero (beta = 0). The seasonal component was included with a smoothing parameter (gamma) of 0.1. The coefficients showed seasonal adjustments, like lower charges in January and higher charges in December.
+
+
+Forecasts for 2014 showed a steady increase in charges, starting at 45.37 in January and reaching 71.45 in December. The confidence intervals showed a range of uncertainty, with values between 40.78 and 49.97 in January and between 62.83 and 80.07 in December. These results match the pattern seen in previous years, showing a rise in charges, especially later in the year.
+
+
