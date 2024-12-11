@@ -1,6 +1,8 @@
  Issaiah Jennings 
 
-Module # 12 assignment
+This assignment analyzes monthly credit card charges for a student in 2012 and 2013 using the Holt-Winters Exponential Smoothing Model. 
+The forecast predicts charges for 2014, showing an increasing trend with seasonal fluctuations, particularly higher charges in December.
+
 
 
 
@@ -51,15 +53,6 @@ Module # 12 assignment
 +         col = "blue")
 
 > 
-
-
-
-
-
-
-
-
-
 
 > # Apply Holt-Winters exponential smoothing to the time series
 
@@ -130,11 +123,6 @@ s12  12.6976853
 
 +      col = "blue")
 
-
-
-
-
-
 > 
 
 > # Generate a forecast for the next 12 months
@@ -184,13 +172,14 @@ Nov 2014       63.94556 58.49469 69.39642 55.60917 72.28194
 Dec 2014       71.45213 65.81471 77.08954 62.83044 80.07381
 
 
-> 
+The time series data shows monthly credit card charges for a student in 2012 and 2013. There are noticeable increases in charges towards the end of each year. 
+The Holt-Winters Exponential Smoothing Model was used to predict future charges, considering both trends and seasonality. 
+The model used a smoothing parameter (alpha) of 0.4787, giving moderate weight to recent data, while the trend component was set to zero (beta = 0). 
+The seasonal component was included with a smoothing parameter (gamma) of 0.1. The coefficients showed seasonal adjustments, like lower charges in January and higher charges in December.
 
 
-
-The time series data shows monthly credit card charges for a student in 2012 and 2013. There are noticeable increases in charges towards the end of each year. The Holt-Winters Exponential Smoothing Model was used to predict future charges, considering both trends and seasonality. The model used a smoothing parameter (alpha) of 0.4787, giving moderate weight to recent data, while the trend component was set to zero (beta = 0). The seasonal component was included with a smoothing parameter (gamma) of 0.1. The coefficients showed seasonal adjustments, like lower charges in January and higher charges in December.
-
-
-Forecasts for 2014 showed a steady increase in charges, starting at 45.37 in January and reaching 71.45 in December. The confidence intervals showed a range of uncertainty, with values between 40.78 and 49.97 in January and between 62.83 and 80.07 in December. These results match the pattern seen in previous years, showing a rise in charges, especially later in the year.
+Forecasts for 2014 showed a steady increase in charges, starting at 45.37 in January and reaching 71.45 in December. 
+The confidence intervals showed a range of uncertainty, with values between 40.78 and 49.97 in January and between 62.83 and 80.07 in December. 
+These results match the pattern seen in previous years, showing a rise in charges, especially later in the year.
 
 
